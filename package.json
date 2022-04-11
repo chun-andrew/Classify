@@ -1,0 +1,19 @@
+{
+  "name": "classify",
+  "version": "1.0.0",
+  "description": "our comp 590 project that will allow users to sort and create playlists",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chun-andrew/Classify.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chun-andrew/Classify/issues"
+  },
+  "homepage": "https://github.com/chun-andrew/Classify#readme"
+}
