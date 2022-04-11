@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/chun-andrew/Classify/issues"
   },
-  "homepage": "https://github.com/chun-andrew/Classify#readme"
+  "homepage": "https://github.com/chun-andrew/Classify#readme",
+  "dependencies": {
+    "browser-sync": "^2.27.9"
+  }
 }
