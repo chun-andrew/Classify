@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/chun-andrew/Classify#readme",
   "dependencies": {
-    "browser-sync": "^2.27.9"
+    "browser-sync": "^2.27.9",
+    "cookie": "^0.4.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.3",
+    "fetch": "^1.1.0",
+    "node-fetch": "^3.2.3",
+    "request": "^2.88.2"
   }
 }
