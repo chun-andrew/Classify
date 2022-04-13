@@ -37,6 +37,15 @@ var client_id = "95a3053093854b948e0e7ab02218af28"; //my personal clientID
 var client_secret = "155e279a6ac7416f84833a1f99bd1764"; //my personal client Secret
 var redirect_uri = "http://localhost:8888/callback"; //redirect URI for local environment
 
+//wrapping api
+var SpotifyWebApi = require('spotify-web-api-node');
+var spotifyApi = new SpotifyWebApi({
+	client_id: "95a3053093854b948e0e7ab02218af28", //my personal clientID
+	 client_secret: "155e279a6ac7416f84833a1f99bd1764", //my personal client Secret
+	 redirect_uri: "http://localhost:8888/callback"
+	
+  });
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -67,7 +76,27 @@ app.get("/login", function (req, res) {
 	res.cookie(stateKey, state);
 
 	// your application requests authorization
-	var scope = "user-read-private user-read-email";
+	const scope = scopes = [
+		'ugc-image-upload',
+		'user-read-playback-state',
+		'user-modify-playback-state',
+		'user-read-currently-playing',
+		'streaming',
+		'app-remote-control',
+		'user-read-email',
+		'user-read-private',
+		'playlist-read-collaborative',
+		'playlist-modify-public',
+		'playlist-read-private',
+		'playlist-modify-private',
+		'user-library-modify',
+		'user-library-read',
+		'user-top-read',
+		'user-read-playback-position',
+		'user-read-recently-played',
+		'user-follow-read',
+		'user-follow-modify'
+	  ];	  
 	res.redirect(
 		"https://accounts.spotify.com/authorize?" +
 			querystring.stringify({
@@ -174,6 +203,60 @@ app.get("/refresh_token", function (req, res) {
 		}
 	});
 });
+
+function getUserId (){
+	return this.userId
+}
+
+function userAccessToken (){
+	return this.access_token
+}
+
+function getTrack (trackId, options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/tracks/' + trackId)
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
+}
+
+function getUser (userId, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/users/' + encodeURIComponent(userId))
+      .build()
+      .execute(HttpManager.get, callback);
+  }
+
+  function getMe (callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me')
+      .build()
+      .execute(HttpManager.get, callback);
+  }
+
+ function getMySavedTracks(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/tracks')
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
+  }
+
+ function getPlaylist(playlistId, options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/playlists/' + playlistId)
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
+  }
+  
+  function getPlaylistTracks (playlistId, options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
+  }
 
 console.log("Listening on 8888");
 app.listen(8888);
