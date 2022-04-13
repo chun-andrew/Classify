@@ -5,9 +5,18 @@ const axios = require('axios');
 
 const chosenPlaylists = [];
 
-var allSongs = [];
+var allSongs = Array();
 
 for(i=0; i < chosenPlaylists.length; i++){ 
-    
+    if (i=0) {
+        allSongs= getSongsArray(chosenPlaylists(1));
+    } else {
+    allSongs.append(getSongsArray(i));
+    }
+}
+
+function getSongsArray(playlist){ 
+    axios.get()
+
 }
 
