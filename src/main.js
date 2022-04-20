@@ -38,13 +38,13 @@ var client_secret = "155e279a6ac7416f84833a1f99bd1764"; //my personal client Sec
 var redirect_uri = "http://localhost:8888/callback"; //redirect URI for local environment
 
 //wrapping api
-var SpotifyWebApi = require('spotify-web-api-node');
-var spotifyApi = new SpotifyWebApi({
-	client_id: "95a3053093854b948e0e7ab02218af28", //my personal clientID
-	 client_secret: "155e279a6ac7416f84833a1f99bd1764", //my personal client Secret
-	 redirect_uri: "http://localhost:8888/callback"
+//var SpotifyWebApi = require('spotify-web-api-node');
+//var spotifyApi = new SpotifyWebApi({
+	//client_id: "95a3053093854b948e0e7ab02218af28", //my personal clientID
+	 //client_secret: "155e279a6ac7416f84833a1f99bd1764", //my personal client Secret
+	 //redirect_uri: "http://localhost:8888/callback"
 	
-  });
+  //});
 
 /**
  * Generates a random string containing numbers and letters
@@ -65,6 +65,8 @@ var generateRandomString = function (length) {
 var stateKey = "spotify_auth_state";
 
 var app = express();
+
+var user_toke =''
 
 app
 	.use(express.static(__dirname + "/public"))
@@ -145,6 +147,7 @@ app.get("/callback", function (req, res) {
 			if (!error && response.statusCode === 200) {
 				var access_token = body.access_token,
 					refresh_token = body.refresh_token;
+					user_toke = body.access_token
 
 				var options = {
 					url: "https://api.spotify.com/v1/me",
@@ -203,7 +206,6 @@ app.get("/refresh_token", function (req, res) {
 		}
 	});
 });
-
 function getUserId (){
 	return this.userId
 }
@@ -212,51 +214,13 @@ function userAccessToken (){
 	return this.access_token
 }
 
-function getTrack (trackId, options, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/tracks/' + trackId)
-      .withQueryParameters(options)
-      .build()
-      .execute(HttpManager.get, callback);
-}
 
-function getUser (userId, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/users/' + encodeURIComponent(userId))
-      .build()
-      .execute(HttpManager.get, callback);
-  }
+ exports.getUserId = getUserId
+ exports.userAccessToken = userAccessToken
+ 
 
-  function getMe (callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me')
-      .build()
-      .execute(HttpManager.get, callback);
-  }
 
- function getMySavedTracks(options, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/tracks')
-      .withQueryParameters(options)
-      .build()
-      .execute(HttpManager.get, callback);
-  }
-
- function getPlaylist(playlistId, options, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId)
-      .withQueryParameters(options)
-      .build()
-      .execute(HttpManager.get, callback);
-  }
-  
-  function getPlaylistTracks (playlistId, options, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/tracks')
-      .withQueryParameters(options)
-      .build()
-      .execute(HttpManager.get, callback);
-  }
 
 console.log("Listening on 8888");
+console.log(user_toke)
 app.listen(8888);
