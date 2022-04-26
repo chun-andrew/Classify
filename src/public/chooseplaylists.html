@@ -12,6 +12,7 @@
         
         </style>
     </head>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
     <body>
         <div class="container">
@@ -23,18 +24,73 @@
                     <div class="row">
                         <div class="col-6">
                             Playlist
+                            <p id = "playlists"></p>
                         </div>
+
                         <div class="col">
-                            Runtime
+                            # of Songs
+                            <p id="playlist_length"></p>
                         </div>
+
                         <div class="col">
                             Add to New Playlist
+                            <p id = "add_playlist"></p>
                         </div>
-                        <script>src = 'chooseplaylists.js'</script>
+
+                    </div>
+                    <div>
+                        <button class='btn btn-default' style='color: D3D3D3; justify-content: flex-end;'>Song Selection</button>
                     </div>
                 </div>
             </div>
         </div>
 
     </body>
+
+
+
+
+    <!-- <script type="text/javascript" src="../chooseplaylists.js"></script> -->
+    <!-- <script type="module" src = "chooseplaylists.js"></script> -->
+    <script>
+        (function () {
+            let userAccessToken = localStorage.getItem("accessToken");
+
+            if(userAccessToken) {
+                $.ajax({
+                    url: 'https://api.spotify.com/v1/me/playlists',
+                    headers: {
+                        'Authorization': 'Bearer ' + userAccessToken
+                    },
+                    success: function (response) {
+                        let playlist_names = response.items.map(elem => elem.name);
+                        console.log(playlist_names);
+
+                        let num_songs = response.items.map(elem => elem.tracks.total);
+                        console.log(num_songs)
+
+                        playlist_names.forEach(elem => {
+                            document.getElementById("playlists").innerHTML += elem + "<br>";
+                        });
+
+                        num_songs.forEach(elem => {
+                            let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
+                            document.getElementById("playlist_length").innerHTML += elem + "<br>";
+                            document.getElementById("add_playlist").innerHTML += add + "<br>";
+                        });
+                        // // var playlists = document.createElement('h1');
+                        // // h1.textContent = "New Heading!!!";
+                        // // h1.setAttribute('class', 'note');
+                        // document.getElementById("playlists").innerHTML +=
+                        // "<p>Test</p>";      
+                    }
+                });
+
+
+            }
+
+
+        })();
+    </script>
+
 </html>

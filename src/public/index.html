@@ -30,8 +30,8 @@
             </div>
             <div id="oauth">
             </div>
-            <!-- <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-            <button class="btn btn-default" id="get-playlists">Get Current User's get-playlists</button> -->
+            <!-- <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button> -->
+            <button class="btn btn-default" id="get-playlists">Get Current User's get-playlists</button>
 
         </div>
     </div>
@@ -111,6 +111,8 @@
 
                             $("#login").hide();
                             $("#loggedin").show();
+                            // localStorage.setItem("userId", JSON.stringify(this.userId));
+                            localStorage.setItem("accessToken", access_token);
                         },
                     });
                 } else {
@@ -134,17 +136,19 @@
                 //     });
                 // }, false);
 
-                // document.getElementById('get-playlists').addEventListener('click', function () {
-                //     $.ajax({
-                //         url: 'https://api.spotify.com/v1/me/playlists',
-                //         headers: {
-                //             'Authorization': 'Bearer ' + access_token
-                //         },
-                //         success: function (response) {
-                //             console.log(response.items)
-                //         }
-                //     });
-                // }, false);
+                document.getElementById('get-playlists').addEventListener('click', function () {
+                    $.ajax({
+                        url: 'https://api.spotify.com/v1/me/playlists',
+                        headers: {
+                            'Authorization': 'Bearer ' + access_token
+                        },
+                        success: function (response) {
+                            console.log(response.items)
+                        }
+                    });
+                }, false);
+
+                
             }
         })();
     </script>
