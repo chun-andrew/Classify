@@ -32,6 +32,8 @@ var request = require("request"); // "Request" library
 var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
+// var LocalStorage = require("node-localstorage").LocalStorage;
+// localStorage = new LocalStorage("./scratch");
 
 var client_id = "95a3053093854b948e0e7ab02218af28"; //my personal clientID
 var client_secret = "155e279a6ac7416f84833a1f99bd1764"; //my personal client Secret
@@ -40,11 +42,11 @@ var redirect_uri = "http://localhost:8888/callback"; //redirect URI for local en
 //wrapping api
 //var SpotifyWebApi = require('spotify-web-api-node');
 //var spotifyApi = new SpotifyWebApi({
-	//client_id: "95a3053093854b948e0e7ab02218af28", //my personal clientID
-	 //client_secret: "155e279a6ac7416f84833a1f99bd1764", //my personal client Secret
-	 //redirect_uri: "http://localhost:8888/callback"
-	
-  //});
+//client_id: "95a3053093854b948e0e7ab02218af28", //my personal clientID
+//client_secret: "155e279a6ac7416f84833a1f99bd1764", //my personal client Secret
+//redirect_uri: "http://localhost:8888/callback"
+
+//});
 
 /**
  * Generates a random string containing numbers and letters
@@ -66,7 +68,7 @@ var stateKey = "spotify_auth_state";
 
 var app = express();
 
-var user_toke = 0
+var user_toke = "";
 
 app
 	.use(express.static(__dirname + "/public"))
@@ -78,27 +80,27 @@ app.get("/login", function (req, res) {
 	res.cookie(stateKey, state);
 
 	// your application requests authorization
-	const scope = scopes = [
-		'ugc-image-upload',
-		'user-read-playback-state',
-		'user-modify-playback-state',
-		'user-read-currently-playing',
-		'streaming',
-		'app-remote-control',
-		'user-read-email',
-		'user-read-private',
-		'playlist-read-collaborative',
-		'playlist-modify-public',
-		'playlist-read-private',
-		'playlist-modify-private',
-		'user-library-modify',
-		'user-library-read',
-		'user-top-read',
-		'user-read-playback-position',
-		'user-read-recently-played',
-		'user-follow-read',
-		'user-follow-modify'
-	  ];	  
+	const scope = (scopes = [
+		"ugc-image-upload",
+		"user-read-playback-state",
+		"user-modify-playback-state",
+		"user-read-currently-playing",
+		"streaming",
+		"app-remote-control",
+		"user-read-email",
+		"user-read-private",
+		"playlist-read-collaborative",
+		"playlist-modify-public",
+		"playlist-read-private",
+		"playlist-modify-private",
+		"user-library-modify",
+		"user-library-read",
+		"user-top-read",
+		"user-read-playback-position",
+		"user-read-recently-played",
+		"user-follow-read",
+		"user-follow-modify",
+	]);
 	res.redirect(
 		"https://accounts.spotify.com/authorize?" +
 			querystring.stringify({
@@ -147,7 +149,7 @@ app.get("/callback", function (req, res) {
 			if (!error && response.statusCode === 200) {
 				var access_token = body.access_token,
 					refresh_token = body.refresh_token;
-					user_toke = body.access_token
+				user_toke = body.access_token;
 
 				var options = {
 					url: "https://api.spotify.com/v1/me",
@@ -206,24 +208,24 @@ app.get("/refresh_token", function (req, res) {
 		}
 	});
 });
-function getUserId (){
-	return this.userId
+
+function getUserId() {
+	return this.userId;
 }
 
-function userAccessToken (){
-	return this.access_token
+function getUserAccessToken() {
+	return this.access_token;
 }
 
-
- exports.getUserId = getUserId
- exports.userAccessToken = userAccessToken
- 
-
-
+// if (typeof window !== "undefined") {
+// localStorage.setItem("userId", JSON.stringify(this.userId));
+// localStorage.setItem("accessToken", JSON.stringify(this.access_token));
+// }
+// localStorage.setItem("userId", this.userId);
+// localStorage.setItem("accessToken", this.access_token);
+exports.getUserId = getUserId;
+exports.getUserAccessToken = getUserAccessToken;
 
 console.log("Listening on 8888");
-console.log("please")
-console.log(user_toke)
-console.log("work")
 app.listen(8888);
 module.exports.user_toke = user_toke
