@@ -66,7 +66,7 @@ var stateKey = "spotify_auth_state";
 
 var app = express();
 
-var user_toke =''
+var user_toke = 0
 
 app
 	.use(express.static(__dirname + "/public"))
@@ -222,5 +222,8 @@ function userAccessToken (){
 
 
 console.log("Listening on 8888");
+console.log("please")
 console.log(user_toke)
+console.log("work")
 app.listen(8888);
+module.exports.user_toke = user_toke
