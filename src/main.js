@@ -80,7 +80,7 @@ app.get("/login", function (req, res) {
 	res.cookie(stateKey, state);
 
 	// your application requests authorization
-	const scope = (scope = [
+	const scope = (scopes = [
 		"ugc-image-upload",
 		"user-read-playback-state",
 		"user-modify-playback-state",

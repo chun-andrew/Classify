@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
+         h1 {text-align: center;}
+         p {text-align: center;} div {text-align: center;}
+         body { padding: 25px; background-color: black; color: white; font-size: 25px; }
         #login,
         #loggedin {
             display: none;
@@ -31,16 +34,17 @@
             <div id="oauth">
             </div>
             <!-- <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button> -->
-            <button class="btn btn-default" id="get-playlists">Get Current User's get-playlists</button>
+            
 
         </div>
     </div>
 
     <script id="user-profile-template" type="text/x-handlebars-template">
-        <div class="container">
+        <div class="container" >
             <div class="generate-playlist d-flex justify-content-center">
                 <div class="row d-flex justify-content-center">
                     <h1 class="col d-flex justify-content-center">Hi, {{display_name}}!</h1>
+                    <h2 id="description" style="text-align:center">Welcome to Classify, a web application that allows you to sort through all the songs you love on Spotify. Click the choose playlist button to get started and filter through the playlists you would like to be sorted.</h2>
                 </div>
                 <a class="btn btn-success" href="chooseplaylists.html"> Choose Playlist </a>
             </div>
