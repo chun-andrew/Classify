@@ -20,7 +20,7 @@
                     
                 <h1 class="title"> Choose Playlists </h1>
                 
-                <div id="playlist-grid" class="container-sm w-75">
+                <div id="playlist-grid" class="container-fluid">
                     <div class="row">
                         <div class="col-6">
                             Playlist
@@ -54,16 +54,24 @@
     <script>
         (function () {
             let userAccessToken = localStorage.getItem("accessToken");
+            let num_playlists = 0;
+            let has_playlist = false;
+            let classify_playlist_id_index = 0;
 
             if(userAccessToken) {
                 $.ajax({
-                    url: 'https://api.spotify.com/v1/me/playlists',
+                    url: 'https://api.spotify.com/v1/me/playlists?limit=50&offset=0',
                     headers: {
                         'Authorization': 'Bearer ' + userAccessToken
                     },
                     success: function (response) {
+                        
                         let playlist_names = response.items.map(elem => elem.name);
                         console.log(playlist_names);
+                        
+                        let id_of_playlists = response.items.map(elem => elem.id);
+                        
+                        num_playlists = response.items.total;
 
                         let num_songs = response.items.map(elem => elem.tracks.total);
                         console.log(num_songs)
@@ -84,12 +92,63 @@
                         // "<p>Test</p>";      
                     }
                 });
+            }
 
+            let offset = 50;
+            let limit = 50;
+
+            while(num_playlists>=0){
+                
+                if(userAccessToken) {
+                $.ajax({
+                    url: `https://api.spotify.com/v1/me/playlists?limit=50&offset=${offset}`,
+                    headers: {
+                        'Authorization': 'Bearer ' + userAccessToken
+                    },
+                    success: function (response) {
+                        
+                        let playlist_names = response.items.map(elem => elem.name);
+                        console.log(playlist_names);
+                        
+                        let num_songs = response.items.map(elem => elem.tracks.total);
+                        console.log(num_songs)
+
+                        playlist_names.forEach(elem => {
+                            document.getElementById("playlists").innerHTML += elem + "<br>";
+                            if (elem.name == "Classify Playlist"){
+                                has_playlist = true;
+                            }
+                            let classify
+                        });
+
+                        num_songs.forEach(elem => {
+                            let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
+                            document.getElementById("playlist_length").innerHTML += elem + "<br>";
+                            document.getElementById("add_playlist").innerHTML += add + "<br>";
+                        });
+                        // // var playlists = document.createElement('h1');
+                        // // h1.textContent = "New Heading!!!";
+                        // // h1.setAttribute('class', 'note');
+                        // document.getElementById("playlists").innerHTML +=
+                        // "<p>Test</p>";      
+                        
+                    }
+                });
+            }
+                    num_playlists = num_playlists -50;
+                    offset = offset + 50;
 
             }
 
 
         })();
+
+   
+
+       
+
+        
+
     </script>
 
 </html>
