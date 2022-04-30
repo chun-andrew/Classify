@@ -5,10 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap" rel="stylesheet">   
     <style type="text/css">
          h1 {text-align: center;}
          p {text-align: center;} div {text-align: center;}
-         body { padding: 25px; background-color: black; color: white; font-size: 25px; }
+         h2{font-size: 25px;  position:relative; top:50px; font-style: italic;}
+         .choose-playlist-button{text-align:center; width: 300px; height: 100px; position: absolute; top: 1000px;}
+         body { padding: 25px; background-color: black; color: white; font-size: 25px; font-family: 'Roboto', sans-serif; }
         #login,
         #loggedin {
             display: none;
@@ -43,10 +51,11 @@
         <div class="container" >
             <div class="generate-playlist d-flex justify-content-center">
                 <div class="row d-flex justify-content-center">
-                    <h1 class="col d-flex justify-content-center">Hi, {{display_name}}!</h1>
+                    <h1 class="col d-flex justify-content-center"> Welcome, {{display_name}}!</h1>
                     <h2 id="description" style="text-align:center">Welcome to Classify, a web application that allows you to sort through all the songs you love on Spotify. Click the choose playlist button to get started and filter through the playlists you would like to be sorted.</h2>
                 </div>
-                <a class="btn btn-success" href="chooseplaylists.html"> Choose Playlist </a>
+                <div></div>
+                <a class="btn btn-success" href="chooseplaylists.html" style="height:100px; width: 300px; font-size: 30px; position:relative; top:150px; align-items: center;"  > Choose Playlist </a>
             </div>
         </div>
     </script>
