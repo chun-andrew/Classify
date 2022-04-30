@@ -60,10 +60,17 @@
 
             if(userAccessToken) {
                 $.ajax({
-                    url: 'https://api.spotify.com/v1/me/playlists?limit=50&offset=0',
+                    url: 'https://api.spotify.com/v1/me/playlists',
+
                     headers: {
                         'Authorization': 'Bearer ' + userAccessToken
                     },
+                    data: {
+                        limit: 50,
+                        offset: 0
+                    },
+                    
+                   
                     success: function (response) {
                         
                         let playlist_names = response.items.map(elem => elem.name);
@@ -93,17 +100,18 @@
                     }
                 });
             }
-
-            let offset = 50;
-            let limit = 50;
-
+            let offset_count = 50;
             while(num_playlists>=0){
                 
                 if(userAccessToken) {
                 $.ajax({
-                    url: `https://api.spotify.com/v1/me/playlists?limit=50&offset=${offset}`,
+                    url: `https://api.spotify.com/v1/me/playlists`,
                     headers: {
-                        'Authorization': 'Bearer ' + userAccessToken
+                        'Authorization': 'Bearer ' + userAccessToken,
+                    },
+                    data:{
+                        limit: 50,
+                        offset: offset_count,
                     },
                     success: function (response) {
                         
@@ -136,9 +144,12 @@
                 });
             }
                     num_playlists = num_playlists -50;
-                    offset = offset + 50;
+                    offset_count = offset_count + 50;
 
             }
+
+        
+           
 
 
         })();
