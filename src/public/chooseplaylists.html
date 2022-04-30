@@ -88,28 +88,39 @@
                         limit: 50,
                         offset: 0
                     },
-                    
+                
                    
                     success: function (response) {
                         
+                        let num_playlists = response.total
+                        console.log(num_playlists)
+
                         let playlist_names = response.items.map(elem => elem.name);
                         console.log(playlist_names);
                         
                         let id_of_playlists = response.items.map(elem => elem.id);
-                        
-                        num_playlists = response.items.total;
+                        console.log(id_of_playlists)
+
+                        id_of_playlists.forEach(elem =>{
+                            let add = `<button name='id-buttons' id= ${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
+                            document.getElementById("add_playlist").innerHTML += add + "<br>";
+                        })
 
                         let num_songs = response.items.map(elem => elem.tracks.total);
                         console.log(num_songs)
 
                         playlist_names.forEach(elem => {
                             document.getElementById("playlists").innerHTML += elem + "<br>";
+                            if (elem === 'Classify Playlist'){
+                                has_playlist = true;
+                            }
+                            console.log(has_playlist);
                         });
 
                         num_songs.forEach(elem => {
-                            let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
+                            //let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
                             document.getElementById("playlist_length").innerHTML += elem + "<br>";
-                            document.getElementById("add_playlist").innerHTML += add + "<br>";
+                            //document.getElementById("add_playlist").innerHTML += add + "<br>";
                         });
                         // // var playlists = document.createElement('h1');
                         // // h1.textContent = "New Heading!!!";
@@ -142,23 +153,31 @@
 
                         playlist_names.forEach(elem => {
                             document.getElementById("playlists").innerHTML += elem + "<br>";
-                            if (elem.name == "Classify Playlist"){
-                                has_playlist = true;
-                            }
-                            let classify
                         });
+                        let id_of_playlists = response.items.map(elem => elem.id);
+                        console.log(id_of_playlists)
 
-                        num_songs.forEach(elem => {
-                            let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
-                            document.getElementById("playlist_length").innerHTML += elem + "<br>";
+                        id_of_playlists.forEach(elem =>{
+                            let add = `<button name='id-buttons' id= ${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
                             document.getElementById("add_playlist").innerHTML += add + "<br>";
+                        })
+                        num_songs.forEach(elem => {
+                            //let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
+                            document.getElementById("playlist_length").innerHTML += elem + "<br>";
+                            if (elem === "Classify Playlist"){
+                                has_playlist = true;
+                            } else {
+                                has_playlist = has_playlist;
+                            }
+                            console.log(has_playlist);
+                            //document.getElementById("add_playlist").innerHTML += add + "<br>";
                         });
                         // // var playlists = document.createElement('h1');
                         // // h1.textContent = "New Heading!!!";
                         // // h1.setAttribute('class', 'note');
                         // document.getElementById("playlists").innerHTML +=
                         // "<p>Test</p>";      
-                        
+                    
                     }
                 });
             }
