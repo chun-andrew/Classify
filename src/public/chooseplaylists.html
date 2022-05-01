@@ -71,6 +71,7 @@
     <!-- <script type="text/javascript" src="../chooseplaylists.js"></script> -->
     <!-- <script type="module" src = "chooseplaylists.js"></script> -->
     <script>
+        //first part of script to get a user's playlists
         (function () {
             let userAccessToken = localStorage.getItem("accessToken");
             let num_playlists = 0;
@@ -130,9 +131,9 @@
                     }
                 });
             }
+            //gets rest of playlists
             let offset_count = 50;
-            while(num_playlists>=0){
-                
+            while(num_playlists>=0){   
                 if(userAccessToken) {
                 $.ajax({
                     url: `https://api.spotify.com/v1/me/playlists`,
@@ -186,12 +187,54 @@
 
             }
 
-        
-           
-
-
         })();
 
+        //get user ID to make a playlist
+        (function(){
+            let userAccessToken = localStorage.getItem("accessToken")
+            if(userAccessToken){
+                $.ajax({
+                    url: `https://api.spotify.com/v1/me`,
+                    headers:{
+                        'Authorization': 'Bearer ' + userAccessToken,
+
+                    },
+                    success: function(response){
+                        console.log("success")
+                        let user_Id = response.id;
+                        localStorage.setItem("userID", user_Id);
+                        console.log(localStorage.getItem("userID"))
+                    }
+                    
+                })
+        }
+    })();
+     
+        (function (){
+            let userAccessToken = localStorage.getItem("accessToken");
+            let userID = localStorage.getItem("userID");
+            if(userAccessToken){
+                $.ajax({
+                    type: "POST",
+                    url: `https://api.spotify.com/v1/users/${userID}/playlists`,
+                    data: {
+                        'name': 'best playlist ever',
+                        'public': 'true',
+                        'collaborative': 'false',
+                        'description': 'please dear god work',
+                        'user_id': userID
+                    },
+                    headers:{
+                        'Authorization': 'Bearer ' + userAccessToken,
+
+                    },
+                    success: function(data){
+                        console.log("success")
+                    }
+                    
+                })
+            }    
+        })();
    
 
        

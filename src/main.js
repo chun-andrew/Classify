@@ -80,18 +80,14 @@ app.get("/login", function (req, res) {
 	res.cookie(stateKey, state);
 
 	// your application requests authorization
-	const scope = ([
-		"ugc-image-upload",
-		"user-read-playback-state",
-		"user-modify-playback-state",
-		"user-read-currently-playing",
+	var scopey = ([
+		"ugc-image-upload playlist-read-private playlist-modify-private playlist-modify-private",
 		"streaming",
 		"app-remote-control",
 		"user-read-email",
 		"user-read-private",
 		"playlist-read-collaborative",
 		"playlist-modify-public",
-		"playlist-read-private",
 		"playlist-modify-private",
 		"user-library-modify",
 		"user-library-read",
@@ -101,6 +97,7 @@ app.get("/login", function (req, res) {
 		"user-follow-read",
 		"user-follow-modify",
 	]);
+	var scope = 'user-library-read playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-email'
 	res.redirect(
 		"https://accounts.spotify.com/authorize?" +
 			querystring.stringify({
