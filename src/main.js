@@ -97,7 +97,7 @@ app.get("/login", function (req, res) {
 		"user-follow-read",
 		"user-follow-modify",
 	]);
-	var scope = 'user-library-read playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-email'
+	var scope = 'user-library-read playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-email user-top-read'
 	res.redirect(
 		"https://accounts.spotify.com/authorize?" +
 			querystring.stringify({

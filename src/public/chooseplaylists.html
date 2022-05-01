@@ -74,7 +74,7 @@
         //first part of script to get a user's playlists
         (function () {
             let userAccessToken = localStorage.getItem("accessToken");
-            let num_playlists = 0;
+            //let num_playlists = 0;
             let has_playlist = false;
             let classify_playlist_id_index = 0;
 
@@ -94,6 +94,7 @@
                     success: function (response) {
                         
                         let num_playlists = response.total
+                        localStorage.setItem("numberOfPlaylists", num_playlists)
                         console.log(num_playlists)
 
                         let playlist_names = response.items.map(elem => elem.name);
@@ -133,8 +134,11 @@
             }
             //gets rest of playlists
             let offset_count = 50;
+            let bnum_playlists = localStorage.getItem("numberOfPlaylists")
+            console.log(bnum_playlists)
+            let num_playlists= bnum_playlists;
             while(num_playlists>=0){   
-                if(userAccessToken) {
+                //if(userAccessToken) {
                 $.ajax({
                     url: `https://api.spotify.com/v1/me/playlists`,
                     headers: {
@@ -145,9 +149,13 @@
                         offset: offset_count,
                     },
                     success: function (response) {
-                        
+                        let anum_playlists = response.total
+                        console.log(anum_playlists)
+
                         let playlist_names = response.items.map(elem => elem.name);
                         console.log(playlist_names);
+
+                        
                         
                         let num_songs = response.items.map(elem => elem.tracks.total);
                         console.log(num_songs)
@@ -181,8 +189,9 @@
                     
                     }
                 });
-            }
+           // }
                     num_playlists = num_playlists -50;
+                    console.log(num_playlists)
                     offset_count = offset_count + 50;
 
             }
@@ -211,22 +220,25 @@
     })();
      
         (function (){
-            let userAccessToken = localStorage.getItem("accessToken");
+            let a_userAccessToken = localStorage.getItem("accessToken")
+            console.log(a_userAccessToken)
             let userID = localStorage.getItem("userID");
-            if(userAccessToken){
+            if(a_userAccessToken){
                 $.ajax({
-                    type: "POST",
+                    headers:{
+                        'Authorization': `Bearer${a_userAccessToken}`,
+                        'Content-Type': 'application/json'
+
+                    },
+                    type: 'POST',
                     url: `https://api.spotify.com/v1/users/${userID}/playlists`,
+                   
+                    dataType: {
+                        'dataType': 'json'
+                    },
                     data: {
                         'name': 'best playlist ever',
-                        'public': 'true',
-                        'collaborative': 'false',
-                        'description': 'please dear god work',
-                        'user_id': userID
-                    },
-                    headers:{
-                        'Authorization': 'Bearer ' + userAccessToken,
-
+                        'public': false,
                     },
                     success: function(data){
                         console.log("success")
