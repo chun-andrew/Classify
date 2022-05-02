@@ -45,8 +45,9 @@
                         console.log(response.items[0].track);
                         response.items.forEach(item => {
                         var song = item.track;
+                        
                         document.getElementById("tbody").innerHTML += (songLine(song.name, 
-                         song.artists[0].name, song.album.name, song.album.release_date, song.id));
+                        song.artists[0].name, song.album.name, song.album.release_date, song.id));
 
                         all_songs.push(item.track);})
                         //if(response.total >=50) {getSongs(lim, off + 50)};
@@ -58,8 +59,9 @@
         }
         
         getSongs(50, 0);
-        // all_songs = all_songs.forEach(song => document.getElementById("tbody").append(songLine(song.name, 
-        // song.artists[0], song.album.name, song.album.release_date, song.id)));
+        console.log(all_songs);
+        all_songs.forEach(song => document.getElementById("tbody").innerHTML += (songLine(song.name, 
+        song.artists[0].name, song.album.name, song.album.release_date, song.id)));
 
     })();
 
@@ -79,6 +81,24 @@
             </tr>`); 
         }
     
+    </script>
+    <script>
+        
+
+        function sendSongsToLocalStorage() {
+            var song_nodes = document.getElementsByName('check-id');
+            var song_checkboxes = [];
+            
+            for(var i = song_nodes.length; i--; song_checkboxes.unshift(song_nodes[i])); 
+
+        
+            var selected_songs = song_checkboxes.filter(song => song.checked == true);
+            var song_ids = selected_songs.map(song => song.id);
+            // alert(song_ids);
+
+            localStorage.setItem("selectedSongs", JSON.stringify(song_ids));
+
+        };
     </script>
 
     <body class="bg-dark text-white">
@@ -132,8 +152,10 @@
                         </tbody>
                     </table>
                 </div>
-                <a class = 'btn btn-success' href = "tuneplaylist.html">Tune Your Playlist</a>
+                <!-- <a class="btn btn-success" onclick="sendSongsToLocalStorage()">TEST CLICKER</a> -->
+                <a class = 'btn btn-success' href = "tuneplaylist.html" onclick="sendSongsToLocalStorage()">Tune Your Playlist</a>
             </div>
         </div>
     </body>
+    
 </html>
