@@ -12,6 +12,67 @@
         
         </style>
     </head>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+    // function for html body of a song
+    (function () {
+        var all_songs = []
+
+        //get list of playlist ids from local storage
+        var playlist_ids = JSON.parse(localStorage.chosenPlaylists);
+        console.log(playlist_ids);
+        // ajax call for each playlist
+        let userAccessToken = localStorage.getItem("accessToken");
+            //let num_playlists = 0;
+
+        function getSongs(lim, off) {
+            playlist_ids.forEach(id => {
+                
+                var purl = 'https://api.spotify.com/v1/playlists/' + id + '/tracks';
+                $.ajax ({
+                    url: purl,
+                    
+                    headers: {
+                        'Authorization': 'Bearer ' + userAccessToken
+                    },
+
+                    data: {
+                        limit: lim,
+                        offset: off
+                    },
+
+                    success: function (response) {
+
+                        all_songs.push(response.items.tracks);
+                        //if(response.total >=50) {getSongs(lim, off + 50)};
+                    }
+
+                });
+            });
+        }
+        
+        getSongs(50, 0);
+        all_songs = all_songs.forEach(song => document.getElementById("tbody").append(songLine(song.name, song.artists[0], song.album.name, song.album.release_date, song.id)));
+
+    })();
+
+    function songLine (title, artist, album, year,id) {
+        return (
+            `<tr>
+                <th scope="row"></th>
+                <td>${title}</td>
+                <td>${artist}</td>
+                <td>${album}</td>
+                <td>${year}</td>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="${id}" name="check-id">
+                    </div>
+                </td>
+            </tr>`); 
+        }
+    
+    </script>
 
     <body>
         <div id="home-button" class="pull-right">
@@ -58,19 +119,8 @@
                             </th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row"></th>
-                            <td>Green</td>
-                            <td>Cavetown</td>
-                            <td>Lemon Boy</td>
-                            <td>2017</td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                </div>
-                            </td>
-                        </tr>
+                        <tbody id="tbody">
+                        
                         <tr>
                             <th scope="row"></th>
                             <td>Green</td>
