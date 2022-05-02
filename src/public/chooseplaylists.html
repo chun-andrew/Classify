@@ -34,13 +34,14 @@
             top: 5px;
             right: 25px;'>Home</a>
         </div>
+
         <div class="container">
             <div id="choose-playlists">
                     
                 <h1 class="title"> Choose Playlists </h1>
                 
                 <div id="playlist-grid" class="container-fluid">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-6">
                             Playlist
                             <p id = "playlists"></p>
@@ -56,9 +57,21 @@
                             <p id = "add_playlist"></p>
                         </div>
 
-                    </div>
+                    </div> -->
+                    <table class="table text-white">
+                        <thead>
+                        <tr>
+                            <th scope="col">Playlist</th>
+                            <th scope="col">Number of songs</th>
+                            <th scope="col">Add to New Playlist</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            
+                        
+                        </tbody>
+                    </table>
                     <div>
-                        <!-- <button onclick="sendPlaylistsToLocalStorage()">CLICK HERE</button> -->
 
                         <a id= "selectsongs" class='btn btn-success'  onclick="sendPlaylistsToLocalStorage()" href="selectsongs.html" style='color: D3D3D3; justify-content: flex-end;'>Song Selection</a>
                     </div>
@@ -101,48 +114,56 @@
                         localStorage.setItem("numberOfPlaylists", num_playlists)
                         console.log(num_playlists)
 
-                        let playlist_names = response.items.map(elem => elem.name);
-                        console.log(playlist_names);
-                        
-                        let id_of_playlists = response.items.map(elem => elem.id);
-                        console.log(id_of_playlists)
+                        let playlists = response.items;
+                        playlists.forEach(elem =>
+                            {
+                               var name = elem.name;
+                               var id = elem.id;
+                               var length = elem.tracks.total;
 
-                        id_of_playlists.forEach(elem =>{
-                            //let add = `<button name='id-buttons' id=${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
-                        let add =`<input type="checkbox" name='check-id' class="form-check-input" id=${elem}>` 
-                            // <label class="form-check-label" for="exampleCheck1">Add Playlist</label>`
+                               let add = 
+                                `
+                                <tr class="text-white">
+                                    
+                                        <td>${name}</td>
+                                        <td>${length}</td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" name='check-id' class="form-check-input" id=${elem}>
+                                            </div>
+                                        </td>
+                                </tr>
+                                `
 
-                            //var checkbox = document.createElement("input");
-                            //checkboc.
-
-                            
-
-                            document.getElementById("add_playlist").innerHTML += add + "<br>";
-                            
-  
-                        })
-
-                        let num_songs = response.items.map(elem => elem.tracks.total);
-                        console.log(num_songs)
-
-                        playlist_names.forEach(elem => {
-                            document.getElementById("playlists").innerHTML += elem + "<br>";
-                            if (elem === 'Classify Playlist'){
-                                has_playlist = true;
+                               document.getElementById('tbody').innerHTML += add;
                             }
-                            console.log(has_playlist);
-                        });
+                        )
 
-                        num_songs.forEach(elem => {
-                            //let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
-                            document.getElementById("playlist_length").innerHTML += elem + "<br>";
-                            //document.getElementById("add_playlist").innerHTML += add + "<br>";
-                        });
-                        // // var playlists = document.createElement('h1');
-                        // // h1.textContent = "New Heading!!!";
-                        // // h1.setAttribute('class', 'note');
-                        // document.getElementById("playlists").innerHTML +=
-                        // "<p>Test</p>";      
+                        // let playlist_names = response.items.map(elem => elem.name);
+                        // console.log(playlist_names);
+                        
+                        // let id_of_playlists = response.items.map(elem => elem.id);
+                        // console.log(id_of_playlists)
+
+                        // id_of_playlists.forEach(elem =>{
+                        // let add =`<input type="checkbox" name='check-id' class="form-check-input" id=${elem}>` 
+                        //     document.getElementById("add_playlist").innerHTML += add + "<br>";
+                        // })
+
+                        // let num_songs = response.items.map(elem => elem.tracks.total);
+                        // console.log(num_songs)
+
+                        // playlist_names.forEach(elem => {
+                        //     document.getElementById("playlists").innerHTML += elem + "<br>";
+                        //     if (elem === 'Classify Playlist'){
+                        //         has_playlist = true;
+                        //     }
+                        //     console.log(has_playlist);
+                        // });
+
+                        // num_songs.forEach(elem => {
+                        //     document.getElementById("playlist_length").innerHTML += elem + "<br>";
+                        // });     
                     }
                 });
             }
@@ -169,30 +190,55 @@
                         let playlist_names = response.items.map(elem => elem.name);
                         console.log(playlist_names);
 
+                        console.log(num_playlists)
+
+                        let playlists = response.items;
+                        playlists.forEach(elem =>
+                            {
+                               var name = elem.name;
+                               var id = elem.id;
+                               var length = elem.tracks.total;
+
+                               let add = 
+                                `
+                                <tr class="text-white">
+                                    
+                                        <td>${name}</td>
+                                        <td>${length}</td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" name='check-id' class="form-check-input" id=${elem}>
+                                            </div>
+                                        </td>
+                                </tr>
+                                `
+
+                               document.getElementById('tbody').innerHTML += add;
+                            }
+                        )
                         
-                        
-                        let num_songs = response.items.map(elem => elem.tracks.total);
-                        console.log(num_songs)
+                        // let num_songs = response.items.map(elem => elem.tracks.total);
+                        // console.log(num_songs)
 
-                        playlist_names.forEach(elem => {
-                            document.getElementById("playlists").innerHTML += elem + "<br>";
-                        });
-                        let id_of_playlists = response.items.map(elem => elem.id);
-                        console.log(id_of_playlists)
+                        // playlist_names.forEach(elem => {
+                        //     document.getElementById("playlists").innerHTML += elem + "<br>";
+                        // });
+                        // let id_of_playlists = response.items.map(elem => elem.id);
+                        // console.log(id_of_playlists)
 
-                        id_of_playlists.forEach(elem =>{
-                            //let add = `<button name='id-buttons' id= ${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
-                            let add =`<input type="checkbox" name='check-id' class="form-check-input" id=${elem}>` 
-                            // <label class="form-check-label" for="exampleCheck1" style='font: '>Add Playlist</label>`
-                            document.getElementById("add_playlist").innerHTML += add + "<br>";
+                        // id_of_playlists.forEach(elem =>{
+                        //     //let add = `<button name='id-buttons' id= ${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
+                        //     let add =`<input type="checkbox" name='check-id' class="form-check-input" id=${elem}>` 
+                        //     // <label class="form-check-label" for="exampleCheck1" style='font: '>Add Playlist</label>`
+                        //     document.getElementById("add_playlist").innerHTML += add + "<br>";
 
-                            //let add = document.createElement()
-                        })
-                        num_songs.forEach(elem => {
-                            //let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
-                            document.getElementById("playlist_length").innerHTML += elem + "<br>";
-                            //document.getElementById("add_playlist").innerHTML += add + "<br>";
-                        });
+                        //     //let add = document.createElement()
+                        // })
+                        // num_songs.forEach(elem => {
+                        //     //let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
+                        //     document.getElementById("playlist_length").innerHTML += elem + "<br>";
+                        //     //document.getElementById("add_playlist").innerHTML += add + "<br>";
+                        // });
                         // // var playlists = document.createElement('h1');
                         // // h1.textContent = "New Heading!!!";
                         // // h1.setAttribute('class', 'note');
