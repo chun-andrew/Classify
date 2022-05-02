@@ -15,7 +15,7 @@
             position:absolute;
             top: 5px;
             right: 25px;;}
-            body { padding: 25px; background-color: black; color: white; font-size: 25px; }
+            body { padding: 25px; background-color: black; color: white; font-size: 20px; }
         
         </style>
     </head>
@@ -106,8 +106,11 @@
                         console.log(id_of_playlists)
 
                         id_of_playlists.forEach(elem =>{
-                            let add = `<button name='id-buttons' id= ${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
+                            //let add = `<button name='id-buttons' id=${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
+                            let add =`<input type="checkbox" name='button-id' class="form-check-input" id=${elem}> <label class="form-check-label" for="exampleCheck1">Add Playlist</label>`
                             document.getElementById("add_playlist").innerHTML += add + "<br>";
+                            
+  
                         })
 
                         let num_songs = response.items.map(elem => elem.tracks.total);
@@ -169,18 +172,13 @@
                         console.log(id_of_playlists)
 
                         id_of_playlists.forEach(elem =>{
-                            let add = `<button name='id-buttons' id= ${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
+                            //let add = `<button name='id-buttons' id= ${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
+                            let add =`<form> <input type="checkbox" name='button-id' class="form-check-input" id=${elem}> <label class="form-check-label" for="exampleCheck1" style='font: '>Add Playlist</label>`
                             document.getElementById("add_playlist").innerHTML += add + "<br>";
                         })
                         num_songs.forEach(elem => {
                             //let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
                             document.getElementById("playlist_length").innerHTML += elem + "<br>";
-                            if (elem === "Classify Playlist"){
-                                has_playlist = true;
-                            } else {
-                                has_playlist = has_playlist;
-                            }
-                            console.log(has_playlist);
                             //document.getElementById("add_playlist").innerHTML += add + "<br>";
                         });
                         // // var playlists = document.createElement('h1');
@@ -195,6 +193,7 @@
                     num_playlists = num_playlists -50;
                     console.log(num_playlists)
                     offset_count = offset_count + 50;
+                    console.log(offset_count)
 
             }
 
@@ -228,7 +227,7 @@
             if(a_userAccessToken){
                 $.ajax({
                     headers:{
-                        'Authorization': `Bearer${a_userAccessToken}`,
+                        'Authorization': `Bearer ${a_userAccessToken}`,
                         'Content-Type': 'application/json'
 
                     },
