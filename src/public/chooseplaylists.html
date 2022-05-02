@@ -105,10 +105,9 @@
 
                         id_of_playlists.forEach(elem =>{
                             //let add = `<button name='id-buttons' id=${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
-                            let add =`<input type="checkbox" name='button-id' class="form-check-input" id=${elem}> <label class="form-check-label" for="exampleCheck1">Add Playlist</label>`
+                            let add =`<input type="checkbox" name='button-id' class="form-check-input" id=${elem} onclick="myfunction"> <script> function myFunction() {console.log("yeet")} </script>`
                             document.getElementById("add_playlist").innerHTML += add + "<br>";
-                            
-  
+                            butt.addEventListener("click",function(){console.log("yeet")})
                         })
 
                         let num_songs = response.items.map(elem => elem.tracks.total);
@@ -171,8 +170,10 @@
 
                         id_of_playlists.forEach(elem =>{
                             //let add = `<button name='id-buttons' id= ${elem} class='btn btn-default' style='color: D3D3D3;'> Add Playlist </button>`;
-                            let add =`<form> <input type="checkbox" name='button-id' class="form-check-input" id=${elem}> <label class="form-check-label" for="exampleCheck1" style='font: '>Add Playlist</label>`
+                            let add =`<form> <input type="checkbox" name='button-id' class="form-check-input" id=${elem} onclick="myfunction"> <script> function myFunction() {console.log("yeet")} </script>`
                             document.getElementById("add_playlist").innerHTML += add + "<br>";
+                            var butt = document.getElementById(elem)
+                            butt.addEventListener("click",function(){console.log("yeet")})
                         })
                         num_songs.forEach(elem => {
                             //let add = "<button class='btn btn-default' style='color: D3D3D3;'>Add Playlist</button>";
