@@ -122,8 +122,7 @@
                                var length = elem.tracks.total;
 
                                let add = 
-                                `
-                                <tr class="text-white">
+                                `<tr class="text-white">
                                     
                                         <td>${name}</td>
                                         <td>${length}</td>
@@ -132,8 +131,8 @@
                                                 <input type="checkbox" name='check-id' class="form-check-input" id=${id}>
                                             </div>
                                         </td>
-                                </tr>
-                                `
+                                </tr>`
+                                
 
                                document.getElementById('tbody').innerHTML += add;
                             }

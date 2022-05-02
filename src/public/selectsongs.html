@@ -13,75 +13,7 @@
         </style> -->
     </head>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script>
-    // function for html body of a song
-    (function () {
-        var all_songs = Array();
-
-        //get list of playlist ids from local storage
-        var playlist_ids = JSON.parse(localStorage.chosenPlaylists);
-        console.log(playlist_ids);
-        // ajax call for each playlist
-        let userAccessToken = localStorage.getItem("accessToken");
-            //let num_playlists = 0;
-
-        function getSongs(lim, off) {
-            playlist_ids.forEach(id => {
-                
-                var purl = 'https://api.spotify.com/v1/playlists/' + id + '/tracks';
-                $.ajax ({
-                    url: purl,
-                    
-                    headers: {
-                        'Authorization': 'Bearer ' + userAccessToken
-                    },
-
-                    data: {
-                        limit: lim,
-                        offset: off
-                    },
-
-                    success: function (response) {
-                        console.log(response.items[0].track);
-                        response.items.forEach(item => {
-                        var song = item.track;
-                        
-                        document.getElementById("tbody").innerHTML += (songLine(song.name, 
-                        song.artists[0].name, song.album.name, song.album.release_date, song.id));
-
-                        all_songs.push(item.track);})
-                        //if(response.total >=50) {getSongs(lim, off + 50)};
-                    }
-                });
-
-            }
-            )
-        }
-        
-        getSongs(50, 0);
-        console.log(all_songs);
-        all_songs.forEach(song => document.getElementById("tbody").innerHTML += (songLine(song.name, 
-        song.artists[0].name, song.album.name, song.album.release_date, song.id)));
-
-    })();
-
-    function songLine (title, artist, album, year,id) {
-        return (
-            `<tr class="text-white">
-                <th scope="row"></th>
-                <td>${title}</td>
-                <td>${artist}</td>
-                <td>${album}</td>
-                <td>${year.slice(0,4)}</td>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="${id}" name="check-id">
-                    </div>
-                </td>
-            </tr>`); 
-        }
     
-    </script>
     <script>
         
 
@@ -94,7 +26,7 @@
         
             var selected_songs = song_checkboxes.filter(song => song.checked == true);
             var song_ids = selected_songs.map(song => song.id);
-            // alert(song_ids);
+            
 
             localStorage.setItem("selectedSongs", JSON.stringify(song_ids));
 
@@ -157,5 +89,86 @@
             </div>
         </div>
     </body>
+    <script>
+        // function for html body of a song
+        var songs =[];
+        (function () {
+            let all_songs = Array();
+            // localStorage.setItem("allSongs", all_songs);
+            //get list of playlist ids from local storage
+            var playlist_ids = JSON.parse(localStorage.chosenPlaylists);
+            console.log(playlist_ids);
+            // ajax call for each playlist
+            let userAccessToken = localStorage.getItem("accessToken");
+                //let num_playlists = 0;
     
+            function getSongs(lim, off) {
+               // const songs = [];
+                playlist_ids.forEach(id => {
+    
+                    
+                    var purl = 'https://api.spotify.com/v1/playlists/' + id + '/tracks';
+                    $.ajax ({
+                        url: purl,
+                        
+                        headers: {
+                            'Authorization': 'Bearer ' + userAccessToken
+                        },
+    
+                        data: {
+                            limit: lim,
+                            offset: off
+                        },
+    
+                        success: function (response) {
+                            console.log(response.items[0].track);
+                            response.items.forEach(item => {
+                            var song = item.track;
+                            
+                            // document.getElementById("tbody").innerHTML += (renderSong(song.name, 
+                            // song.artists[0].name, song.album.name, song.album.release_date, song.id));
+    
+                            all_songs.push(song);
+                            localStorage.setItem("allSongs", JSON.stringify(all_songs));  
+     
+                        })
+    
+                        
+                            //if(response.total >=50) {getSongs(lim, off + 50)};
+                        }
+                    });
+                        //console.log(all_songs);
+                    }
+                )
+            }
+            
+            
+            getSongs(50, 0);
+            songs = JSON.parse(localStorage.allSongs);
+    
+            console.log(songs);
+            console.log(songs[0].name);
+    
+            songs.forEach(song =>  document.getElementById("tbody").innerHTML += (renderSong(song.name, 
+            song.artists[0].name, song.album.name, song.album.release_date, song.id)));
+    
+        })();
+    
+        function renderSong (title, artist, album, year,id) {
+            return (
+                `<tr class="text-white">
+                    <th scope="row"></th>
+                    <td>${title}</td>
+                    <td>${artist}</td>
+                    <td>${album}</td>
+                    <td>${year.slice(0,4)}</td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="${id}" name="check-id">
+                        </div>
+                    </td>
+                </tr>`); 
+            }
+        
+        </script>
 </html>
