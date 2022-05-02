@@ -58,7 +58,7 @@
 
                     </div>
                     <div>
-                        <a class='btn btn-success' href="selectsongs.html" style='color: D3D3D3; justify-content: flex-end;'>Song Selection</a>
+                        <a id= "selectsongs" class='btn btn-success'  onClick="sendPlaylistsToLocalStorage" href="selectsongs.html" style='color: D3D3D3; justify-content: flex-end;'>Song Selection</a>
                     </div>
                 </div>
             </div>
@@ -72,6 +72,8 @@
     <!-- <script type="module" src = "chooseplaylists.js"></script> -->
     <script>
         //first part of script to get a user's playlists
+        
+
         (function () {
             let userAccessToken = localStorage.getItem("accessToken");
             //let num_playlists = 0;
@@ -247,9 +249,29 @@
                 })
             }    
         })();
-   
+        
+        (function () {
+        
+        let selected_playlists =[];
+        var all_buttons = document.getElementsByName('id-buttons');
+        console.log("number of buttons " + all_buttons.length);
 
-       
+        all_buttons.forEach(item => {
+            item.addEventListener("click", function () {
+                let id = item.id;
+                if (selected_playlists.includes(id)) {
+                        selected_playlists = selected_playlists.filter(function(value, index, arr){ return value != id;});
+                } else {
+                    selected_playlists.push(id);
+                }
+                console.log("PLAYLIST ADDED?");
+            })
+        });
+
+        function sendPlaylistsToLocalStorage() {
+            localStorage.setItem("chosenPlaylists", selected_playlists);
+        }
+    })();
 
         
 
