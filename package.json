@@ -1,11 +1,11 @@
 {
   "name": "classify",
-  "version": "1.0.0",
+  "version": "6.11.3",
   "description": "our comp 590 project that will allow users to sort and create playlists",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./src/main.js"
+    "start": "node ./src/main.js"
   },
   "repository": {
     "type": "git",
