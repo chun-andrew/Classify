@@ -121,7 +121,8 @@
                         url: purl,
                         
                         headers: {
-                            'Authorization': 'Bearer ' + userAccessToken
+                            'Authorization': 'Bearer ' + userAccessToken,
+                            'Access-Control-Allow-Origin': 'http://localhost:8888'
                         },
     
                         data: {
