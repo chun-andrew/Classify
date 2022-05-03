@@ -223,6 +223,6 @@ function getUserAccessToken() {
 exports.getUserId = getUserId;
 exports.getUserAccessToken = getUserAccessToken;
 
-console.log("Listening on 5000");
-app.listen(5000);
+console.log("Listening on 8888");
+app.listen(process.env.PORT || 8888);
 module.exports.user_toke = user_toke
