@@ -37,8 +37,8 @@ var cookieParser = require("cookie-parser");
 
 var client_id = "95a3053093854b948e0e7ab02218af28"; //my personal clientID
 var client_secret = "155e279a6ac7416f84833a1f99bd1764"; //my personal client Secret
-//var redirect_uri = ("https://classify590.herokuapp.com/callback"); //redirect URI for local environment
-var redirect_uri = "http://localhost:8888/callback";
+var redirect_uri = "https://classify590.herokuapp.com/callback"; //redirect URI for local environment
+// var redirect_uri = "http://localhost:8888/callback";
 
 //wrapping api
 //var SpotifyWebApi = require('spotify-web-api-node');
@@ -81,7 +81,7 @@ app.get("/login", function (req, res) {
 	res.cookie(stateKey, state);
 
 	// your application requests authorization
-	var scopey = ([
+	var scopey = [
 		"ugc-image-upload playlist-read-private playlist-modify-private playlist-modify-private",
 		"streaming",
 		"app-remote-control",
@@ -97,8 +97,9 @@ app.get("/login", function (req, res) {
 		"user-read-recently-played",
 		"user-follow-read",
 		"user-follow-modify",
-	]);
-	var scope = 'user-library-read playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-email user-top-read'
+	];
+	var scope =
+		"user-library-read playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-email user-top-read";
 	res.redirect(
 		"https://accounts.spotify.com/authorize?" +
 			querystring.stringify({
@@ -226,4 +227,4 @@ exports.getUserAccessToken = getUserAccessToken;
 
 console.log("Listening on 8888");
 app.listen(process.env.PORT || 8888);
-module.exports.user_toke = user_toke
+module.exports.user_toke = user_toke;
