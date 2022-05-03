@@ -40,7 +40,7 @@
 
     <body class="bg-dark text-white">
         <div id="home-button" class="pull-right">
-            <a class='btn btn-success' href="http://localhost:8888/callback" style='line-height: 12px;
+            <a class='btn btn-success' href="index.html" style='line-height: 12px;
             width: 65px;
             height: 30px;
             font-size: 10pt;
@@ -64,6 +64,7 @@
 
                 <div class="song-table col-10">
                     <h1>Select Songs</h1>
+                    <p>Select the songs that you would like on your playlist</p>
                 
                 
                     <table class="table text-white">
@@ -122,7 +123,8 @@
                         
                         headers: {
                             'Authorization': 'Bearer ' + userAccessToken,
-                            'Access-Control-Allow-Origin': 'http://localhost:8888'
+                            'Access-Control-Allow-Origin': 'http://localhost:8888',
+                            'Vary': 'Origin'
                         },
     
                         data: {
