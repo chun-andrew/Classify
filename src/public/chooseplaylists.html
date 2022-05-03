@@ -169,7 +169,7 @@
             //gets rest of playlists
             let offset_count = 50;
             let bnum_playlists = localStorage.getItem("numberOfPlaylists")
-            console.log(bnum_playlists)
+            // console.log(bnum_playlists)
             let num_playlists= bnum_playlists;
             while(num_playlists>=0){   
                 //if(userAccessToken) {
@@ -343,7 +343,7 @@
         
             var selected_playlists = all_playlists.filter(playlist => playlist.checked == true);
             var playlist_ids = selected_playlists.map(playlist => playlist.id);
-            alert(playlist_ids);
+            // alert(playlist_ids);
 
             localStorage.setItem("chosenPlaylists", JSON.stringify(playlist_ids));
 

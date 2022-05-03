@@ -29,7 +29,6 @@
             
 
             localStorage.setItem("selectedSongs", JSON.stringify(song_ids));
-
         };
     </script>
 
@@ -50,8 +49,10 @@
             <div class="row gx-20 gy-5 ">
                 <div class="filters col-2">
                     <h1>Filters</h1>
-                    <h3>Genres</h3>
-                    <p>pop</p>
+                    <div>
+                        <h3 id = "genres" >Genres</h3>
+
+                    </div>
                 </div>
 
                 <div class="song-table col-10">
@@ -61,7 +62,7 @@
                     <table class="table text-white">
                         <thead>
                         <tr>
-                            <th scope="col">Add Mood +</th>
+                            <!-- <th scope="col">Add Mood +</th> -->
                             <th scope="col">Title</th>
                             <th scope="col">Artist</th>
                             <th scope="col">Album</th>
@@ -91,22 +92,23 @@
     </body>
     <script>
         // function for html body of a song
-        var songs =[];
+        var songs = [];
         (function () {
             let all_songs = Array();
+            let all_artists = Array();
             // localStorage.setItem("allSongs", all_songs);
             //get list of playlist ids from local storage
             var playlist_ids = JSON.parse(localStorage.chosenPlaylists);
-            console.log(playlist_ids);
+            // console.log(playlist_ids);
             // ajax call for each playlist
             let userAccessToken = localStorage.getItem("accessToken");
-                //let num_playlists = 0;
+            //let num_playlists = 0;
+            // let decades = [];
+            // let 
     
             function getSongs(lim, off) {
                // const songs = [];
                 playlist_ids.forEach(id => {
-    
-                    
                     var purl = 'https://api.spotify.com/v1/playlists/' + id + '/tracks';
                     $.ajax ({
                         url: purl,
@@ -121,7 +123,7 @@
                         },
     
                         success: function (response) {
-                            console.log(response.items[0].track);
+                            // console.log(response.items[0].track);
                             response.items.forEach(item => {
                             var song = item.track;
                             
@@ -129,12 +131,11 @@
                             // song.artists[0].name, song.album.name, song.album.release_date, song.id));
     
                             all_songs.push(song);
-                            localStorage.setItem("allSongs", JSON.stringify(all_songs));  
-     
+                            all_artists.push(song.artists[0].id);
+                            localStorage.setItem("allSongs", JSON.stringify(all_songs)); 
+                            localStorage.setItem("allArtists", JSON.stringify(all_artists));
                         })
-    
-                        
-                            //if(response.total >=50) {getSongs(lim, off + 50)};
+
                         }
                     });
                         //console.log(all_songs);
@@ -142,16 +143,72 @@
                 )
             }
             
-            
+            function getAllGenres(artist_ids) {
+                let genres = [];
+                $.ajax({
+                    url: `https://api.spotify.com/v1/artists?ids=${artist_ids}`,
+
+                    headers: {
+                        'Authorization': 'Bearer ' + userAccessToken,
+                        'Content-Type': 'application/json'
+                    },
+
+                    success: function (response) {
+                        // console.log("Genre is: ");
+                        // console.log(response)
+                        genres.push(...response.artists.map(item => item.genres));
+                        genres = [].concat.apply([], genres);
+                        localStorage.setItem("genres", JSON.stringify(genres))
+                    },
+
+                    error: function(errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            } //genre can only be retrieved via artist endpoint
+
+            function getSongInfo(track_id) {
+                $.ajax({
+                    url: `https://api.spotify.com/v1/tracks/${track_id}`,
+
+                    headers: {
+                        'Authorization': 'Bearer ' + userAccessToken
+                    },
+
+                    success: function (response) {
+
+
+                    }
+                });
+            } //get all other song info - year released, 
+
             getSongs(50, 0);
             songs = JSON.parse(localStorage.allSongs);
-    
-            console.log(songs);
-            console.log(songs[0].name);
+            let artists = localStorage.allArtists;
+            artists = artists.replaceAll('"', '');
+            artists = artists.replaceAll(' ', '');
+            artists = artists.replaceAll('[', '');
+            artists = artists.replaceAll(']', '');
+            // console.log(artists)
+            // console.log(artists);
+            // console.log(songs);
+            // console.log(songs[0].name);
+            // console.log(songs[10].artists[0].id)
+            // console.log(songs[2].artists[0].id)
+
+            getAllGenres(artists);
+            let genres = JSON.parse(localStorage.genres);
+            let uniqueGenres = [...new Set(genres)];
+            uniqueGenres = Array.from(uniqueGenres);
+            console.log(uniqueGenres);
+
+            uniqueGenres.forEach(genre => {
+                let genre_html = `<p style="font-size:50%;">${genre}</p>`;
+                document.getElementById("genres").innerHTML += genre_html;
+            })
     
             songs.forEach(song =>  document.getElementById("tbody").innerHTML += (renderSong(song.name, 
             song.artists[0].name, song.album.name, song.album.release_date, song.id)));
-    
         })();
     
         function renderSong (title, artist, album, year,id) {
@@ -164,7 +221,7 @@
                     <td>${year.slice(0,4)}</td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="${id}" name="check-id">
+                            <input class="form-check-input" type="checkbox" value="" id="${id}" name="check-id" checked>
                         </div>
                     </td>
                 </tr>`); 
