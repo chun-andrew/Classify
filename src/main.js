@@ -37,8 +37,8 @@ var cookieParser = require("cookie-parser");
 
 var client_id = "95a3053093854b948e0e7ab02218af28"; //my personal clientID
 var client_secret = "155e279a6ac7416f84833a1f99bd1764"; //my personal client Secret
-var redirect_uri = ("https://classify590.herokuapp.com/callback"); //redirect URI for local environment
-//var redirect_uri = "http://localhost:8888/callback";
+//var redirect_uri = ("https://classify590.herokuapp.com/callback"); //redirect URI for local environment
+var redirect_uri = "http://localhost:8888/callback";
 
 //wrapping api
 //var SpotifyWebApi = require('spotify-web-api-node');

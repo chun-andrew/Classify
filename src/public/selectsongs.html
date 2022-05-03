@@ -134,7 +134,7 @@
                         url: purl,
                         
                         headers: {
-                            'Authorization': 'Bearer ' + userAccessToken,
+                            'Authorization': 'Bearer ' + userAccessToken
                         },
     
                         data: {
@@ -171,6 +171,10 @@
                     headers: {
                         'Authorization': 'Bearer ' + userAccessToken,
                         'Content-Type': 'application/json'
+                    },
+
+                    data: {
+                        lim: 100
                     },
 
                     success: function (response) {

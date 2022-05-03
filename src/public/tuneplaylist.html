@@ -28,6 +28,7 @@
                 <div id="tune-playlists"> 
                     <h1 class="title"> Fine Tune Your Playlists</h1>
                 </div>
+            
                 <table class="table table-bordered text-white">
                     <thead>
                       <tr>
@@ -36,15 +37,13 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Image Song Title - Artist</td>
-                      </tr>
+                    <tbody id="tbody">
+
                     </tbody>
                   </table>
                   <div style = "display:flex" class="share/save text-center">
-                    <a style="display:inline-block; padding:10px">Share</a>
-                    <a style="display:inline-block; padding:10px">Save to Spotify</a>
+                    <a class="btn btn-success" style="display:inline-block; padding:10px">Share</a>
+                    <a class="btn btn-success" style="display:inline-block; padding:10px">Save to Spotify</a>
                   </div>
                   
             </div>
@@ -68,15 +67,36 @@
 
 
                 success: function (response) {
+
+                  if (response != undefined) {
+                  
                   songs.push(response)
-                  console.log(songs); 
+                  console.log(response.name); 
                   localStorage.setItem("tuneSongs", JSON.stringify(songs));
                 }
+              }
             })
           })
 
           songs = JSON.parse(localStorage.tuneSongs);
         
           console.log(songs);
+
+          songs.forEach(song => {
+            document.getElementById("tbody").innerHTML += renderTuneSong(song.album.images[0].url, song.name, song.artists[0].name)
+              
+          })
+
+          function renderTuneSong(image, name, artist) {
+            // `<tr>
+            //   <td>  
+            //     <div style="display:flex">
+            //     <span style="padding:20px">{name}</span> <span style="padding:20px">{artist}</span> 
+            //     </div>
+            //   </td>
+            // </tr>`
+
+            return `<tr> <td> ${name} - ${artist} </td></tr>`
+          }
         </script>
 </html>
