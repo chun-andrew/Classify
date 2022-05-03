@@ -4,7 +4,8 @@
   "description": "our comp 590 project that will allow users to sort and create playlists",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./src/main.js"
   },
   "repository": {
     "type": "git",
