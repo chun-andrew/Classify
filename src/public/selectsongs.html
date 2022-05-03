@@ -31,7 +31,19 @@
             localStorage.setItem("selectedSongs", JSON.stringify(song_ids));
 
         function checkAllBoxes() {
+            var select_all = document.getElementById("select-all");
             var song_nodes = document.getElementsByName('check-id');
+            var song_checkboxes = [];
+            
+            for(var i = song_nodes.length; i--; song_checkboxes.unshift(song_nodes[i])); 
+
+            if (select_all.checked) {
+                song_checkboxes.forEach( song =>
+                    {
+                        if (!song.checked) {song.checked == true}
+                    }
+                )
+            }
 
         }
 
@@ -79,7 +91,7 @@
                                 <td>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
+                                        <label id="select_all" onclick="checkAllBoxes()" class="form-check-label" for="flexCheckDefault">
                                             Select All
                                         </label>
                                     </div>
@@ -123,7 +135,7 @@
                         
                         headers: {
                             'Authorization': 'Bearer ' + userAccessToken,
-                            'Access-Control-Allow-Origin': 'https://classify590.herokuapp.com/',
+                            'Access-Control-Allow-Origin': 'https://classify590.herokuapp.com',
                         },
     
                         data: {

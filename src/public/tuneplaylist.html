@@ -80,9 +80,12 @@
                 success: function (response) {
                   songs.push(response)
                   console.log(songs); 
+                  localStorage.setItem("tuneSongs", JSON.stringify(songs));
                 }
             })
           })
+
+          songs = JSON.parse(localStorage.tuneSongs);
         
           console.log(songs);
         </script>
