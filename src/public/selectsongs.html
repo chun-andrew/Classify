@@ -29,19 +29,28 @@
             
 
             localStorage.setItem("selectedSongs", JSON.stringify(song_ids));
+    
+    </script>
 
+    <script>
         function checkAllBoxes() {
             var select_all = document.getElementById("select-all");
-            var song_nodes = document.getElementsByName('check-id');
+            var song_nodes = document.getElementsByClassName('song-check');
             var song_checkboxes = [];
             
             for(var i = song_nodes.length; i--; song_checkboxes.unshift(song_nodes[i])); 
+
 
             if (select_all.checked) {
                 song_checkboxes.forEach( song =>
                     {
                         if (!song.checked) {song.checked == true}
                     }
+                )
+            } else {
+                song_checkboxes.forEach( song => {
+                    if (song.checked) {song.checked == false}
+                }
                 )
             }
 
@@ -269,7 +278,7 @@
                     <td>${year.slice(0,4)}</td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="${id}" name="check-id" checked>
+                            <input class="form-check-input song-check" type="checkbox" value="" id="${id}" name="check-id" checked>
                         </div>
                     </td>
                 </tr>`); 
