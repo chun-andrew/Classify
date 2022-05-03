@@ -135,6 +135,7 @@
                         
                         headers: {
                             'Authorization': 'Bearer ' + userAccessToken,
+                            'Access-Control-Allow-Origin': 'https://classify590.herokuapp.com'
                         },
     
                         data: {
@@ -170,7 +171,7 @@
 
                     headers: {
                         'Authorization': 'Bearer ' + userAccessToken,
-                        'Content-Type': 'application/json'
+                        'Access-Control-Allow-Origin': 'https://classify590.herokuapp.com'
                     },
 
                     success: function (response) {
@@ -208,18 +209,19 @@
             // }
 
             getSongs(50, 0);
+            console.log(localStorage.allSongs)
             songs = JSON.parse(localStorage.allSongs);
             let artists = localStorage.allArtists;
             artists = artists.replaceAll('"', '');
             artists = artists.replaceAll(' ', '');
             artists = artists.replaceAll('[', '');
             artists = artists.replaceAll(']', '');
-            // console.log(artists)
-            // console.log(artists);
-            // console.log(songs);
-            // console.log(songs[0].name);
-            // console.log(songs[10].artists[0].id)
-            // console.log(songs[2].artists[0].id)
+            console.log(artists)
+            console.log(artists);
+            console.log(songs);
+            console.log(songs[0].name);
+            console.log(songs[10].artists[0].id)
+            console.log(songs[2].artists[0].id)
 
             getAllGenres(artists);
             let genres = JSON.parse(localStorage.genres);
